@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 class ParagraphJustifier():
     def __init__(self, paragraph, page_width):
@@ -48,12 +49,16 @@ def main():
     parser.add_argument("page_width", type=int, help="Width of the page for justification.")
 
     args = parser.parse_args()
+    
+    try:
+        justifier = ParagraphJustifier(args.paragraph, args.page_width)
+        justified_paragraph = justifier.justify_paragraph()
 
-    justifier = ParagraphJustifier(args.paragraph, args.page_width)
-    justified_paragraph = justifier.justify_paragraph()
-
-    for i, line in enumerate(justified_paragraph, start=1):
-        print(f"Array [{i}] = \"{line}\"")
-
+        for i, line in enumerate(justified_paragraph, start=1):
+            print(f"Array [{i}] = \"{line}\"")
+    except Exception as e:
+            print(f"Error: {e}")
+            sys.exit(1)
+        
 if __name__ == '__main__':
     main()
